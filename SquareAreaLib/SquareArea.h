@@ -6,10 +6,17 @@
 class Square
 {
 private:
-	int x1 = 0;
-	int y1 = 0;
+	Point A;
+	Point B;
+	Point C;
+	Point D;
+	bool check_if_square() const noexcept;
+	void init(Point A, Point B, Point C, Point D);
+
 public:
-	Square(int x = 0, int y = 0);
+	Square();
+	Square(Point A, Point C);
+	Square(Point A, Point B, Point C, Point D);
 	Square(Square const& s) = default;
 	~Square() = default;
 	Square& operator=(Square const& s) = default;
