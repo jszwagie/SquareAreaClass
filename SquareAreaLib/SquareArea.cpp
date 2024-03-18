@@ -2,6 +2,6 @@
 
 Square::Square(int x, int y)
 {
-	this->x = x;
-	this->y = y;
+	this->x1 = x;
+	this->y1 = y;
 }
