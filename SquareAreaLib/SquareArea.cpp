@@ -66,3 +66,20 @@ Point Square::center() const noexcept
 {
 	return Point((A.getX() + B.getX()) / 2, (A.getY() + D.getY()) / 2);
 }
+
+bool Square::operator<(Square const& s) const noexcept
+{
+	return area() < s.area();
+}
+bool Square::operator>(Square const& s) const noexcept
+{
+	return area() > s.area();
+}
+bool Square::operator==(Square const& s) const noexcept
+{
+	return (A == s.A && B == s.B && C == s.C && D == s.D);
+}
+bool Square::operator!=(Square const& s) const noexcept
+{
+	return !(*this == s);
+}

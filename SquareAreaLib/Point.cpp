@@ -30,3 +30,8 @@ int Point::distance_in_line(const Point& p) const
     else
         throw std::invalid_argument("Points not in line");
 }
+
+bool Point::operator==(Point const& p) const noexcept
+{
+    return (getX() == p.getX() && getY() == p.getY());
+}

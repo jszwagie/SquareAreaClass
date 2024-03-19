@@ -24,4 +24,12 @@ public:
 	int perimeter() const noexcept;
 	double diagonal() const noexcept;
 	Point center() const noexcept;
+	/*Square operator+(Square const& s) const noexcept;
+	Square operator*(Square const& s) const noexcept;
+	void operator+=(Square const& s) noexcept;
+	void operator*=(Square const& s) noexcept;*/
+	bool operator<(Square const& s) const noexcept;
+	bool operator>(Square const& s) const noexcept;
+	bool operator==(Square const& s) const noexcept;
+	bool operator!=(Square const& s) const noexcept;
 };
