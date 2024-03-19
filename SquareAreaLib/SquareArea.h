@@ -10,7 +10,7 @@ private:
 	Point B;
 	Point C;
 	Point D;
-	bool check_if_square() const noexcept;
+	bool check_if_square(Point A, Point B, Point C, Point D) const noexcept;
 	void init(Point A, Point B, Point C, Point D);
 
 public:
@@ -20,4 +20,5 @@ public:
 	Square(Square const& s) = default;
 	~Square() = default;
 	Square& operator=(Square const& s) = default;
+	int area() const noexcept;
 };
