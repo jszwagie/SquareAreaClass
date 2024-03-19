@@ -1,5 +1,6 @@
 #include "SquareArea.h"
 #include "Point.h"
+#include <cmath>
 
 
 bool Square::check_if_square(Point A, Point B, Point C, Point D) const noexcept
@@ -26,6 +27,11 @@ void Square::init(Point A, Point B, Point C, Point D)
 	}
 }
 
+int Square::side() const noexcept
+{
+	return A.distance_in_line(B);
+}
+
 Square::Square() : A(Point(0, 0)), B(Point(1, 0)), C(Point(1, 1)), D(Point(0, 1)) {}
 
 Square::Square(Point A, Point C)
@@ -42,6 +48,21 @@ Square::Square(Point A, Point B, Point C, Point D)
 
 int Square::area() const noexcept
 {
-	int side = A.distance_in_line(B);
-	return side * side;
+	int a = side();
+	return a * a;
+}
+
+int Square::perimeter() const noexcept
+{
+	return side() * 4;
+}
+
+double Square::diagonal() const noexcept
+{
+	return sqrt(2) * side();
+}
+
+Point Square::center() const noexcept
+{
+	return Point((A.getX() + B.getX()) / 2, (A.getY() + D.getY()) / 2);
 }

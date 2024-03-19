@@ -45,3 +45,41 @@ TEST(SquareTest, Area) {
     Square square(A, B, C, D);
     EXPECT_EQ(square.area(), 4);
 }
+
+TEST(SquareTest, Area2) {
+    Point A(0, 0);
+    Point B(2, 0);
+    Point C(2, 2);
+    Point D(0, 2);
+    Square square(A, B, C, D);
+    EXPECT_EQ(square.area(), 4);
+}
+
+TEST(SquareTest, Perimeter) {
+    Point A(0, 0);
+    Point B(2, 0);
+    Point C(2, 2);
+    Point D(0, 2);
+    Square square(A, B, C, D);
+    EXPECT_EQ(square.perimeter(), 8);
+}
+
+TEST(SquareTest, Diagonal) {
+    Point A(0, 0);
+    Point B(2, 0);
+    Point C(2, 2);
+    Point D(0, 2);
+    Square square(A, B, C, D);
+    EXPECT_NEAR(square.diagonal(), 2.82843, 0.00001);
+}
+
+TEST(SquareTest, Center) {
+    Point A(0, 0);
+    Point B(2, 0);
+    Point C(2, 2);
+    Point D(0, 2);
+    Square square(A, B, C, D);
+    Point center = square.center();
+    EXPECT_EQ(center.getX(), 1);
+    EXPECT_EQ(center.getY(), 1);
+}
