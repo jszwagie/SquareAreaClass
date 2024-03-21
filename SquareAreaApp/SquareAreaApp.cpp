@@ -7,7 +7,7 @@ int main()
     Square square2(Point(1, -3), Point(7, -3), Point(7, 3), Point(1, 3));
     square2 += square1;
     std::cout << square2 << std::endl;
-    Square s3;
-    s3 = square1 + square2;
+    Square s3(Point(1, -3), Point(7, -3), Point(7, 3), Point(1, 3));
+    s3 *= square1;
     std::cout << s3 << std::endl;
 }

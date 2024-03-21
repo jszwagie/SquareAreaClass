@@ -14,6 +14,8 @@ private:
 	void init(Point A, Point B, Point C, Point D);
 	int side() const noexcept;
 	int* common_points(const Square& s) const noexcept;
+	int* max_points(const Square& s) const noexcept;
+	Square get_square(int *arr) const noexcept;
 public:
 	Square();
 	Square(Point A, Point C);
@@ -26,9 +28,9 @@ public:
 	double diagonal() const noexcept;
 	Point center() const noexcept;
 	Square operator+(Square const& s) const noexcept;
-	//Square operator*(Square const& s) const noexcept;
+	Square operator*(Square const& s) const noexcept;
 	void operator+=(Square const& s) noexcept;
-	//void operator*=(Square const& s) noexcept;
+	void operator*=(Square const& s) noexcept;
 	bool operator<(Square const& s) const noexcept;
 	bool operator>(Square const& s) const noexcept;
 	bool operator==(Square const& s) const noexcept;

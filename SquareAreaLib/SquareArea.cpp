@@ -16,6 +16,7 @@ bool Square::check_if_square(Point A, Point B, Point C, Point D) const noexcept
 
 int* Square::common_points(const Square& s) const noexcept
 {
+	int* array = new int[4];
 	int minX1 = std::min(A.getX(), B.getX());
 	int maxX1 = std::max(A.getX(), B.getX());
 	int minX2 = std::min(s.A.getX(), s.B.getX());
@@ -28,9 +29,35 @@ int* Square::common_points(const Square& s) const noexcept
 	int maxY2 = std::max(s.A.getY(), s.D.getY());
 	int fMinY = std::max(minY1, minY2);
 	int fMaxY = std::min(maxY1, maxY2);
-	int array[4] = { fMinX, fMaxX, fMinY, fMaxY };
+	array[0] = fMinX;
+	array[1] = fMaxX;
+	array[2] = fMinY;
+	array[3] = fMaxY;
 	return array;
 }
+
+int* Square::max_points(const Square& s) const noexcept
+{
+	int* array = new int[4];
+	int minX1 = std::min(A.getX(), B.getX());
+	int maxX1 = std::max(A.getX(), B.getX());
+	int minX2 = std::min(s.A.getX(), s.B.getX());
+	int maxX2 = std::max(s.A.getX(), s.B.getX());
+	int fMinX = std::min(minX1, minX2);
+	int fMaxX = std::max(maxX1, maxX2);
+	int minY1 = std::min(A.getY(), D.getY());
+	int maxY1 = std::max(A.getY(), D.getY());
+	int minY2 = std::min(s.A.getY(), s.D.getY());
+	int maxY2 = std::max(s.A.getY(), s.D.getY());
+	int fMinY = std::min(minY1, minY2);
+	int fMaxY = std::max(maxY1, maxY2);
+	array[0] = fMinX;
+	array[1] = fMaxX;
+	array[2] = fMinY;
+	array[3] = fMaxY;
+	return array;
+};
+	
 
 void Square::init(Point A, Point B, Point C, Point D)
 {
@@ -105,6 +132,41 @@ bool Square::operator!=(Square const& s) const noexcept
 void Square::operator+=(Square const& s) noexcept
 {
 	int* arr = common_points(s);
+	Square res = get_square(arr);
+	*this = res;
+	delete[] arr;
+}
+
+void Square::operator*=(Square const& s) noexcept
+{
+	int* arr = max_points(s);
+	Square res = get_square(arr);
+	*this = res;
+	delete[] arr;
+}
+
+std::ostream& operator<<(std::ostream& os, Square const& s)
+{
+	os << s.A << ", " << s.B << ", " << s.C << ", " << s.D;
+	return os;
+}
+
+Square Square::operator+(Square const& s) const noexcept
+{
+	Square res(*this);
+	res += s;
+	return res;
+}
+
+Square Square::operator*(Square const& s) const noexcept
+{
+	Square res(*this);
+	res *= s;
+	return res;
+}
+
+Square Square::get_square(int *arr) const noexcept
+{
 	int MinX = arr[0];
 	int MaxX = arr[1];
 	int MinY = arr[2];
@@ -112,6 +174,7 @@ void Square::operator+=(Square const& s) noexcept
 	Square Y;
 	Square X;
 	bool checker;
+	int tempY = MaxY;
 	while (MaxY != MinY)
 	{
 		checker = check_if_square(Point(MinX, MinY), Point(MaxX, MinY),
@@ -125,6 +188,7 @@ void Square::operator+=(Square const& s) noexcept
 		else
 			MaxY--;
 	}
+	MaxY = tempY;
 	while (MaxX != MinX)
 	{
 		checker = check_if_square(Point(MinX, MinY), Point(MaxX, MinY),
@@ -139,20 +203,7 @@ void Square::operator+=(Square const& s) noexcept
 			MaxX--;
 	}
 	if (X.area() > Y.area())
-		*this = X;
+		return X;
 	else
-		*this = Y;
-}
-
-std::ostream& operator<<(std::ostream& os, Square const& s)
-{
-	os << s.A << ", " << s.B << ", " << s.C << ", " << s.D;
-	return os;
-}
-
-Square Square::operator+(Square const& s) const noexcept
-{
-	Square res(*this);
-	res += s;
-	return res;
+		return Y;
 }
