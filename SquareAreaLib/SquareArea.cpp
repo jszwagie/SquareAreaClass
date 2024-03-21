@@ -4,6 +4,8 @@
 #include <algorithm>
 
 
+//private methods
+
 bool Square::check_if_square(Point A, Point B, Point C, Point D) const noexcept
 {
 	bool result = false;
@@ -13,6 +15,27 @@ bool Square::check_if_square(Point A, Point B, Point C, Point D) const noexcept
 	return result;
 		
 }
+
+
+void Square::init(Point A, Point B, Point C, Point D)
+{
+	if (!check_if_square(A, B, C, D))
+		throw std::invalid_argument("Inalid points, not a square");
+	else
+	{
+		this->A = A;
+		this->B = B;
+		this->C = C;
+		this->D = D;
+	}
+}
+
+
+int Square::side() const noexcept
+{
+	return A.distance_in_line(B);
+}
+
 
 int* Square::common_points(const Square& s) const noexcept
 {
@@ -35,6 +58,7 @@ int* Square::common_points(const Square& s) const noexcept
 	array[3] = fMaxY;
 	return array;
 }
+
 
 int* Square::max_points(const Square& s) const noexcept
 {
@@ -59,113 +83,7 @@ int* Square::max_points(const Square& s) const noexcept
 };
 	
 
-void Square::init(Point A, Point B, Point C, Point D)
-{
-	if (!check_if_square(A, B, C, D))
-		throw std::invalid_argument("Inalid points, not a square");
-	else
-	{
-		this->A = A;
-		this->B = B;
-		this->C = C;
-		this->D = D;
-	}
-}
-
-int Square::side() const noexcept
-{
-	return A.distance_in_line(B);
-}
-
-Square::Square() : A(Point(0, 0)), B(Point(0, 0)), C(Point(0, 0)), D(Point(0, 0)) {}
-
-Square::Square(Point A, Point C)
-{
-	Point B(C.getX(), A.getY());
-	Point D(A.getX(), C.getY());
-	init(A, B, C, D);
-}
-
-Square::Square(Point A, Point B, Point C, Point D)
-{
-	init(A, B, C, D);
-}
-
-int Square::area() const noexcept
-{
-	int a = side();
-	return a * a;
-}
-
-int Square::perimeter() const noexcept
-{
-	return side() * 4;
-}
-
-double Square::diagonal() const noexcept
-{
-	return sqrt(2) * side();
-}
-
-Point Square::center() const noexcept
-{
-	return Point((A.getX() + B.getX()) / 2, (A.getY() + D.getY()) / 2);
-}
-
-bool Square::operator<(Square const& s) const noexcept
-{
-	return area() < s.area();
-}
-bool Square::operator>(Square const& s) const noexcept
-{
-	return area() > s.area();
-}
-bool Square::operator==(Square const& s) const noexcept
-{
-	return (A == s.A && B == s.B && C == s.C && D == s.D);
-}
-bool Square::operator!=(Square const& s) const noexcept
-{
-	return !(*this == s);
-}
-
-void Square::operator+=(Square const& s) noexcept
-{
-	int* arr = common_points(s);
-	Square res = get_square(arr);
-	*this = res;
-	delete[] arr;
-}
-
-void Square::operator*=(Square const& s) noexcept
-{
-	int* arr = max_points(s);
-	Square res = get_square(arr);
-	*this = res;
-	delete[] arr;
-}
-
-std::ostream& operator<<(std::ostream& os, Square const& s)
-{
-	os << s.A << ", " << s.B << ", " << s.C << ", " << s.D;
-	return os;
-}
-
-Square Square::operator+(Square const& s) const noexcept
-{
-	Square res(*this);
-	res += s;
-	return res;
-}
-
-Square Square::operator*(Square const& s) const noexcept
-{
-	Square res(*this);
-	res *= s;
-	return res;
-}
-
-Square Square::get_square(int *arr) const noexcept
+Square Square::get_square(int* arr) const noexcept
 {
 	int MinX = arr[0];
 	int MaxX = arr[1];
@@ -206,4 +124,135 @@ Square Square::get_square(int *arr) const noexcept
 		return X;
 	else
 		return Y;
+}
+
+
+//public methods
+
+Square::Square() : A(Point(0, 0)), B(Point(0, 0)), C(Point(0, 0)), D(Point(0, 0)) {}
+
+
+Square::Square(Point A, Point C)
+{
+	Point B(C.getX(), A.getY());
+	Point D(A.getX(), C.getY());
+	init(A, B, C, D);
+}
+
+
+Square::Square(Point A, Point B, Point C, Point D)
+{
+	init(A, B, C, D);
+}
+
+
+Point Square::getA() const noexcept
+{
+	return A;
+}
+
+Point Square::getB() const noexcept
+{
+	return B;
+}
+
+Point Square::getC() const noexcept
+{
+	return C;
+}
+
+Point Square::getD() const noexcept
+{
+	return D;
+}
+
+
+int Square::area() const noexcept
+{
+	int a = side();
+	return a * a;
+}
+
+
+int Square::perimeter() const noexcept
+{
+	return side() * 4;
+}
+
+
+double Square::diagonal() const noexcept
+{
+	return sqrt(2) * side();
+}
+
+
+Point Square::center() const noexcept
+{
+	return Point((A.getX() + B.getX()) / 2, (A.getY() + D.getY()) / 2);
+}
+
+
+Square Square::operator+(Square const& s) const noexcept
+{
+	Square res(*this);
+	res += s;
+	return res;
+}
+
+
+Square Square::operator*(Square const& s) const noexcept
+{
+	Square res(*this);
+	res *= s;
+	return res;
+}
+
+
+void Square::operator+=(Square const& s) noexcept
+{
+	int* arr = common_points(s);
+	Square res = get_square(arr);
+	*this = res;
+	delete[] arr;
+}
+
+
+void Square::operator*=(Square const& s) noexcept
+{
+	int* arr = max_points(s);
+	Square res = get_square(arr);
+	*this = res;
+	delete[] arr;
+}
+
+
+bool Square::operator<(Square const& s) const noexcept
+{
+	return area() < s.area();
+}
+
+
+bool Square::operator>(Square const& s) const noexcept
+{
+	return area() > s.area();
+}
+
+
+bool Square::operator==(Square const& s) const noexcept
+{
+	return (A == s.A && B == s.B && C == s.C && D == s.D);
+}
+
+
+bool Square::operator!=(Square const& s) const noexcept
+{
+	return !(*this == s);
+}
+
+
+std::ostream& operator<<(std::ostream& os, Square const& s)
+{
+	
+	os << "Square: " << s.A << ", " << s.B << ", " << s.C << ", " << s.D << ", " << "Area: " << s.area() << '\n';
+	return os;
 }

@@ -1,19 +1,24 @@
 #include "Point.h"
 #include <iostream>
 
+
 Point::Point() : x(0), y(0) {}
 
+
 Point::Point(int x, int y) : x(x), y(y) {}
+
 
 int Point::getX() const
 {
     return x;
 }
 
+
 int Point::getY() const
 {
     return y;
 }
+
 
 int Point::distance_in_line(const Point& p) const
 {
@@ -31,10 +36,12 @@ int Point::distance_in_line(const Point& p) const
         throw std::invalid_argument("Points not in line");
 }
 
+
 bool Point::operator==(Point const& p) const noexcept
 {
     return (getX() == p.getX() && getY() == p.getY());
 }
+
 
 std::ostream& operator<<(std::ostream& os, Point const& p)
 {
