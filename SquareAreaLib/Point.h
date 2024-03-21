@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Point
 {
@@ -15,4 +16,5 @@ public:
 	int getY() const;
 	int distance_in_line(const Point& other) const;
 	bool operator==(Point const& p) const noexcept;
+	friend std::ostream& operator<< (std::ostream& os, Point const& p);
 };

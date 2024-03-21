@@ -35,3 +35,9 @@ bool Point::operator==(Point const& p) const noexcept
 {
     return (getX() == p.getX() && getY() == p.getY());
 }
+
+std::ostream& operator<<(std::ostream& os, Point const& p)
+{
+    os << '(' << p.getX() << ',' << p.getY() << ')';
+    return os;
+}

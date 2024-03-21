@@ -13,6 +13,7 @@ private:
 	bool check_if_square(Point A, Point B, Point C, Point D) const noexcept;
 	void init(Point A, Point B, Point C, Point D);
 	int side() const noexcept;
+	int* common_points(const Square& s) const noexcept;
 public:
 	Square();
 	Square(Point A, Point C);
@@ -24,12 +25,13 @@ public:
 	int perimeter() const noexcept;
 	double diagonal() const noexcept;
 	Point center() const noexcept;
-	/*Square operator+(Square const& s) const noexcept;
-	Square operator*(Square const& s) const noexcept;
+	Square operator+(Square const& s) const noexcept;
+	//Square operator*(Square const& s) const noexcept;
 	void operator+=(Square const& s) noexcept;
-	void operator*=(Square const& s) noexcept;*/
+	//void operator*=(Square const& s) noexcept;
 	bool operator<(Square const& s) const noexcept;
 	bool operator>(Square const& s) const noexcept;
 	bool operator==(Square const& s) const noexcept;
 	bool operator!=(Square const& s) const noexcept;
+	friend std::ostream& operator<<(std::ostream& os, Square const& s);
 };

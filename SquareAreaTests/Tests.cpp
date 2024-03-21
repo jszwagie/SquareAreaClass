@@ -109,3 +109,9 @@ TEST(SquareTest, InequalityOperator) {
     Square square1(A, B, C, D), square2(Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1));
     EXPECT_TRUE(square1 != square2);
 }
+
+TEST(SquareTest, ZeroSquare) {
+    Point A(0, 0), B(0, 0), C(0, 0), D(0, 0);
+    Square square(A, B, C, D);
+    EXPECT_EQ(square.area(), 0);
+}
