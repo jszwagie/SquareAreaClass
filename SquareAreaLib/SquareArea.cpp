@@ -264,9 +264,6 @@ std::istream& operator>>(std::istream& is, Square& s)
 {
 	int xA, yA, xB, yB, xC, yC, xD, yD;
 	is >> xA >> yA >> xB >> yB >> xC >> yC >> xD >> yD;
-	s.A = Point(xA, yA);
-	s.B = Point(xB, yB);
-	s.C = Point(xC, yC);
-	s.D = Point(xD, yD);
+	s.init(Point(xA, yA), Point(xB, yB), Point(xC, yC), Point(xD, yD));
 	return is;
 }
