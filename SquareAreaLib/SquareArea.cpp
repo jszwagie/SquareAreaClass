@@ -10,8 +10,9 @@ bool Square::check_if_square(Point A, Point B, Point C, Point D) const noexcept
 {
 	bool result = false;
 	if (A.getX() == D.getX() && A.getY() == B.getY() && C.getX() == B.getX() && C.getY() == D.getY())
-		if (A.distance_in_line(B) == A.distance_in_line(D))
-			result = true;
+		if (A.getY() < D.getY() && A.getX() < B.getX() && C.getY() > B.getY() && C.getX() > D.getX())
+			if (A.distance_in_line(B) == A.distance_in_line(D))
+				result = true;
 	return result;
 		
 }
@@ -93,33 +94,35 @@ Square Square::get_square(int* arr) const noexcept
 	Square X;
 	bool checker;
 	int tempY = MaxY;
-	while (MaxY != MinY)
-	{
-		checker = check_if_square(Point(MinX, MinY), Point(MaxX, MinY),
-			Point(MaxX, MaxY), Point(MinX, MaxY));
-		if (checker)
+	if(MaxY > MinY)
+		while (MaxY != MinY)
 		{
-			Y.init(Point(MinX, MinY), Point(MaxX, MinY),
+			checker = check_if_square(Point(MinX, MinY), Point(MaxX, MinY),
 				Point(MaxX, MaxY), Point(MinX, MaxY));
-			break;
+			if (checker)
+			{
+				Y.init(Point(MinX, MinY), Point(MaxX, MinY),
+					Point(MaxX, MaxY), Point(MinX, MaxY));
+				break;
+			}
+			else
+				MaxY--;
 		}
-		else
-			MaxY--;
-	}
 	MaxY = tempY;
-	while (MaxX != MinX)
-	{
-		checker = check_if_square(Point(MinX, MinY), Point(MaxX, MinY),
-			Point(MaxX, MaxY), Point(MinX, MaxY));
-		if (checker)
+	if (MaxX > MinX)
+		while (MaxX != MinX)
 		{
-			X.init(Point(MinX, MinY), Point(MaxX, MinY),
+			checker = check_if_square(Point(MinX, MinY), Point(MaxX, MinY),
 				Point(MaxX, MaxY), Point(MinX, MaxY));
-			break;
+			if (checker)
+			{
+				X.init(Point(MinX, MinY), Point(MaxX, MinY),
+					Point(MaxX, MaxY), Point(MinX, MaxY));
+				break;
+			}
+			else
+				MaxX--;
 		}
-		else
-			MaxX--;
-	}
 	if (X.area() > Y.area())
 		return X;
 	else
@@ -255,4 +258,15 @@ std::ostream& operator<<(std::ostream& os, Square const& s)
 	
 	os << "Square: " << s.A << ", " << s.B << ", " << s.C << ", " << s.D << ", " << "Area: " << s.area() << '\n';
 	return os;
+}
+
+std::istream& operator>>(std::istream& is, Square& s)
+{
+	int xA, yA, xB, yB, xC, yC, xD, yD;
+	is >> xA >> yA >> xB >> yB >> xC >> yC >> xD >> yD;
+	s.A = Point(xA, yA);
+	s.B = Point(xB, yB);
+	s.C = Point(xC, yC);
+	s.D = Point(xD, yD);
+	return is;
 }

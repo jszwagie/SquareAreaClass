@@ -46,4 +46,5 @@ public:
 	bool operator!=(Square const& s) const noexcept;
 
 	friend std::ostream& operator<<(std::ostream& os, Square const& s);
+	friend std::istream& operator>>(std::istream& is, Square& s);
 };
